@@ -80,40 +80,6 @@ export const EDITORIAL_SLIDES = [
   },
 ];
 
-export const QA = [
-  {
-    q: "Will a 7ft olive tree overwhelm a small living room?",
-    asker: "Renee P. in Portland, Oregon",
-    answers: 14,
-    answer:
-      "Height reads as elegance, width reads as clutter. The 7ft Olive is airy with a slim trunk, so it adds vertical drama without swallowing floor space. Tuck it in the corner behind a sofa arm and let the canopy overhang.",
-    expert: "EverShelf styling team",
-  },
-  {
-    q: "How do I make a faux fiddle leaf look real up close?",
-    asker: "Marcus H. in Chicago, Illinois",
-    answers: 22,
-    answer:
-      "Three things: bend the wired stems so leaves face different directions, top the pot with preserved moss, and dust every few weeks. Perfect symmetry is the giveaway. Real trees are a little messy.",
-    expert: "EverShelf styling team",
-  },
-  {
-    q: "Can I leave the cypress outside all year?",
-    asker: "Victor A. in Phoenix, Arizona",
-    answers: 9,
-    answer:
-      "Yes on a covered porch or patio. The foliage is UV-treated and the base is weighted for wind. Bring it under cover in a hailstorm, and rinse dust off with a hose in spring.",
-    expert: "EverShelf product team",
-  },
-];
-
-export const TRUST = [
-  { title: "Real materials", body: "Natural wood trunks and hand-painted leaves on every tree over 5ft." },
-  { title: "Real reviews", body: "Every review is from a verified order. We publish the fours and the fives." },
-  { title: "Real returns", body: "30 days, no questions, free return label. Keep the pot if you want." },
-  { title: "Real fast", body: "Ships in 2 to 4 business days from our warehouse. Free over $150." },
-];
-
 export const SOCIAL_POSTS = [
   { label: "Olive corner", image: LIFESTYLE.living[2] },
   { label: "Fiddle by window", image: LIFESTYLE.living[3] },

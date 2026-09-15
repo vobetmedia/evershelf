@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { CATEGORIES, ROOMS, formatPrice, products, type Product } from "@/data/products";
-import { FEATURED_HOMES, QA, SOCIAL_POSTS, TRENDING, TRUST } from "@/data/home";
+import { FEATURED_HOMES, SOCIAL_POSTS, TRENDING } from "@/data/home";
 import { Wordmark } from "./Header";
 import { LIFESTYLE, ROOM_IMAGE, productImage } from "@/data/images";
 import { Photo } from "./Photo";
@@ -87,12 +87,12 @@ export function FeaturedHomes() {
   return (
     <section className={`container-site ${SECTION}`}>
       <SectionHead title="Featured homes" small link={{ href: "/shop", label: "Shop by room" }} />
-      <div className="grid grid-cols-2 gap-3 lg:grid-cols-4 md:gap-5">
-        {FEATURED_HOMES.map((h) => (
+      <div className="grid grid-cols-1 gap-3 md:grid-cols-2 md:gap-5">
+        {FEATURED_HOMES.slice(0, 2).map((h) => (
           <Link key={h.handle} href={`/products/${h.slug}`} className="group block">
             <div className="aspect-[4/5] overflow-hidden">
               <div className="h-full w-full transition-transform duration-500 group-hover:scale-105">
-                <Photo src={ROOM_IMAGE[h.room]} alt={`${h.name}’s ${h.room.toLowerCase()}`} sizes="(min-width: 1024px) 25vw, 50vw" />
+                <Photo src={ROOM_IMAGE[h.room]} alt={`${h.name}’s ${h.room.toLowerCase()}`} sizes="(min-width: 768px) 50vw, 100vw" />
               </div>
             </div>
             <p className="mt-3 text-[14px] font-bold">{h.name} · {h.city}</p>
@@ -212,35 +212,6 @@ export function Splurge({ items }: { items: Product[] }) {
   );
 }
 
-export function RealAnswers() {
-  return (
-    <section className={`container-site ${SECTION}`}>
-      <SectionHead
-        title="Real answers"
-        subtitle="Browse styling and care answers from the EverShelf team and the people who live with our trees"
-        link={{ href: "/about#faq", label: "Ask your own question" }}
-      />
-      <div className="grid gap-4 md:grid-cols-3 md:gap-6">
-        {QA.map((item) => (
-          <article key={item.q} className="flex flex-col border-t-2 border-ink pt-5">
-            <Link href="/about#faq" className="display text-[24px] leading-[24px] hover:text-accent md:text-[26px]">
-              {item.q}
-            </Link>
-            <p className="mt-3 text-[12px]">Asked by: {item.asker}</p>
-            <p className="mt-3 text-[12px] font-bold uppercase">Answers ({item.answers})</p>
-            <p className="mt-4 text-[10px] font-bold uppercase text-accent">Featured answer</p>
-            <p className="mt-1 flex-1 text-[15px] leading-6">{item.answer}</p>
-            <div className="mt-5 flex items-center gap-3">
-              <span className="flex h-9 w-9 items-center justify-center rounded-full bg-accent text-[12px] font-bold text-paper">ES</span>
-              <span className="text-[12px] font-bold">{item.expert}</span>
-            </div>
-          </article>
-        ))}
-      </div>
-    </section>
-  );
-}
-
 export function SocialRail() {
   return (
     <section className={`${SECTION} bg-sage py-14 md:py-20`}>
@@ -260,25 +231,6 @@ export function SocialRail() {
             ))}
           </Rail>
         </div>
-      </div>
-    </section>
-  );
-}
-
-export function EarnTrust() {
-  return (
-    <section className={`container-site ${SECTION}`}>
-      <SectionHead title="How we earn your trust" subtitle="We've got your back, always. Here's what that means in practice." />
-      <div className="mx-auto grid max-w-[1200px] grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4 lg:gap-10">
-        {TRUST.map((t, i) => (
-          <div key={t.title} className="text-center">
-            <div className="mx-auto mb-5 aspect-square w-full max-w-[220px] overflow-hidden rounded-full">
-              <Photo src={LIFESTYLE.editorial[(i + 1) % 4]} alt={t.title} sizes="220px" />
-            </div>
-            <h3 className="display text-[26px]">{t.title}</h3>
-            <p className="mt-2 text-[15px] leading-6">{t.body}</p>
-          </div>
-        ))}
       </div>
     </section>
   );

@@ -1,11 +1,9 @@
 import { allReviews, bestsellers, products } from "@/data/products";
 import {
   Directory,
-  EarnTrust,
   FeaturedHomes,
   HomeHero,
   NewsletterBar,
-  RealAnswers,
   RealTalk,
   SectionHead,
   SocialRail,
@@ -38,9 +36,7 @@ export default function HomePage() {
 
       <RealTalk />
       <Splurge items={splurge} />
-      <RealAnswers />
       <SocialRail />
-      <EarnTrust />
       <Directory />
       <NewsletterBar />
     </>
