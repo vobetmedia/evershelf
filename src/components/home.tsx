@@ -42,11 +42,13 @@ export function SectionHead({
 export function HomeHero() {
   return (
     <div className="container-site">
-      <div className="hidden flex-col items-center pt-8 md:pt-[60px] lg:flex">
-        <Wordmark className="w-full max-w-[826px]" />
+      <div className="flex flex-col items-center pt-3 md:pt-8 lg:pt-[60px]">
+        <div className="w-[88%] max-w-[826px] lg:w-full">
+          <Wordmark />
+        </div>
       </div>
 
-      <form role="search" action="/shop" className="mt-[10px] flex h-[60px] md:h-[74px] lg:mt-[14px]">
+      <form role="search" action="/shop" className="mt-5 flex h-[60px] md:h-[74px] lg:mt-[14px]">
         <input
           type="search"
           name="q"
@@ -86,56 +88,22 @@ export function HomeHero() {
 export function FeaturedHomes() {
   const homes = FEATURED_HOMES.slice(0, 2);
   return (
-    <>
-      <section className="mt-[25px] bg-cream px-4 py-5 lg:hidden">
-        <header className="relative flex flex-col items-center text-center">
-          <span className="absolute right-0 top-0 text-[10px] uppercase text-gray-600">Featured</span>
-          <h2 className="display pt-4 text-[28px] leading-[26px]">Featured homes</h2>
-          <Link href="/shop" className="mt-1 text-[10px] font-bold uppercase underline underline-offset-2">
-            Shop by room
+    <section className={`container-site ${SECTION}`}>
+      <SectionHead title="Featured homes" small link={{ href: "/shop", label: "Shop by room" }} />
+      <div className="grid grid-cols-1 gap-3 md:grid-cols-2 md:gap-5">
+        {homes.map((h) => (
+          <Link key={h.handle} href={`/products/${h.slug}`} className="group block">
+            <div className="aspect-[4/5] overflow-hidden">
+              <div className="h-full w-full transition-transform duration-500 group-hover:scale-105">
+                <Photo src={ROOM_IMAGE[h.room]} alt={`${h.name}’s ${h.room.toLowerCase()}`} sizes="(min-width: 768px) 50vw, 100vw" />
+              </div>
+            </div>
+            <p className="mt-3 text-[14px] font-bold">{h.name} · {h.city}</p>
+            <p className="text-[13px] text-gray-600">{h.tree}</p>
           </Link>
-        </header>
-        <div className="mt-6 flex flex-col gap-2">
-          {homes.map((h) => (
-            <article key={h.handle} className="flex h-[109px] items-center gap-3 bg-paper px-[10px]">
-              <Link href={`/shop?room=${h.room}`} className="h-[70px] w-[70px] shrink-0 overflow-hidden rounded-full">
-                <Photo src={ROOM_IMAGE[h.room]} alt={h.room} sizes="70px" />
-              </Link>
-              <div className="min-w-0 flex-1">
-                <p className="truncate text-[12px] font-bold">{h.name}</p>
-                <p className="truncate text-[10px]">{h.room} · {h.city}</p>
-                <p className="mt-1 truncate text-[10px] font-bold text-accent-mid">{h.tree}</p>
-              </div>
-              <div className="flex shrink-0 flex-col gap-2">
-                <Link href={`/shop?room=${h.room}`} className="flex h-[26px] w-[87px] items-center justify-center border border-ink text-[10px] font-bold uppercase">
-                  Shop look
-                </Link>
-                <Link href={`/products/${h.slug}`} className="flex h-[26px] w-[87px] items-center justify-center bg-accent text-[10px] font-bold uppercase text-paper">
-                  View tree
-                </Link>
-              </div>
-            </article>
-          ))}
-        </div>
-      </section>
-
-      <section className={`container-site hidden ${SECTION} lg:block`}>
-        <SectionHead title="Featured homes" small link={{ href: "/shop", label: "Shop by room" }} />
-        <div className="grid grid-cols-2 gap-5">
-          {homes.map((h) => (
-            <Link key={h.handle} href={`/products/${h.slug}`} className="group block">
-              <div className="aspect-[4/5] overflow-hidden">
-                <div className="h-full w-full transition-transform duration-500 group-hover:scale-105">
-                  <Photo src={ROOM_IMAGE[h.room]} alt={`${h.name}’s ${h.room.toLowerCase()}`} sizes="50vw" />
-                </div>
-              </div>
-              <p className="mt-3 text-[14px] font-bold">{h.name} · {h.city}</p>
-              <p className="text-[13px] text-gray-600">{h.tree}</p>
-            </Link>
-          ))}
-        </div>
-      </section>
-    </>
+        ))}
+      </div>
+    </section>
   );
 }
 

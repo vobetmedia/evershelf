@@ -23,7 +23,7 @@ export function Wordmark({ className = "" }: { className?: string }) {
       height={421}
       priority
       unoptimized
-      className={`h-auto w-auto ${className}`}
+      className={`h-auto w-full ${className}`}
     />
   );
 }
@@ -76,15 +76,17 @@ export function Header() {
             </svg>
           </button>
           {!isHome && (
-            <Link href="/" aria-label="EverShelf home" className="hidden lg:block">
-              <Wordmark className="max-h-[34px]" />
+            <Link href="/" aria-label="EverShelf home" className="hidden w-[164px] lg:block">
+              <Wordmark />
             </Link>
           )}
         </div>
 
-        <Link href="/" aria-label="EverShelf home" className="absolute left-1/2 w-[54%] max-w-[238px] -translate-x-1/2 lg:hidden">
-          <Wordmark className="w-full" />
-        </Link>
+        {!isHome && (
+          <Link href="/" aria-label="EverShelf home" className="absolute left-1/2 w-[54%] max-w-[238px] -translate-x-1/2 lg:hidden">
+            <Wordmark />
+          </Link>
+        )}
 
         <nav aria-label="Primary" className="absolute left-1/2 hidden -translate-x-1/2 lg:block">
           <ul className="flex items-center gap-[60px] xl:gap-[100px]">
