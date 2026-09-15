@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const NAV = [
   { href: "/shop", label: "Shop" },
@@ -45,6 +45,14 @@ export function Header() {
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
   const isHome = pathname === "/";
+  const [count, setCount] = useState(0);
+
+  useEffect(() => {
+    fetch("/api/cart", { cache: "no-store" })
+      .then((r) => r.json())
+      .then((d: { count: number }) => setCount(d.count))
+      .catch(() => setCount(0));
+  }, [pathname]);
 
   return (
     <>
@@ -95,6 +103,16 @@ export function Header() {
               <circle cx="11" cy="11" r="7.5" />
               <path d="M20.5 20.5l-4-4" />
             </svg>
+          </Link>
+          <Link href="/cart" aria-label={`Cart, ${count} items`} className="relative flex h-7 w-6 items-center justify-center">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6">
+              <path d="M6 8h12l1 13H5zM9 8V6a3 3 0 016 0v2" />
+            </svg>
+            {count > 0 && (
+              <span className="absolute -right-2 -top-1 flex h-4 min-w-4 items-center justify-center rounded-full bg-accent px-1 text-[10px] font-bold text-paper">
+                {count}
+              </span>
+            )}
           </Link>
         </div>
       </div>

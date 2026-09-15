@@ -1,4 +1,5 @@
-import { allReviews, bestsellers, products } from "@/data/products";
+import { allReviews } from "@/data/products";
+import { getProducts } from "@/lib/shopify";
 import {
   Directory,
   FeaturedHomes,
@@ -13,7 +14,11 @@ import {
 import { EditorialCarousel } from "@/components/EditorialCarousel";
 import { ReviewCarousel } from "@/components/ReviewCarousel";
 
-export default function HomePage() {
+export const revalidate = 60;
+
+export default async function HomePage() {
+  const products = await getProducts();
+  const bestsellers = products.filter((p) => p.bestseller);
   const featuredReviews = allReviews.filter((r) => r.rating === 5).slice(0, 8);
   const worthIt = [...bestsellers, ...products.filter((p) => !p.bestseller)].slice(0, 5);
   const splurge = [...products].sort((a, b) => b.price - a.price).slice(0, 4);

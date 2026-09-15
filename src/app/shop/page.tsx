@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
-import { products } from "@/data/products";
+import { getProducts } from "@/lib/shopify";
 import { ShopClient } from "@/components/ShopClient";
 
 export const metadata: Metadata = {
@@ -8,7 +8,10 @@ export const metadata: Metadata = {
   description: "Browse every EverShelf faux tree, palm, floral, and planter. Filter by category, room, height, and price.",
 };
 
-export default function ShopPage() {
+export const revalidate = 60;
+
+export default async function ShopPage() {
+  const products = await getProducts();
   return (
     <div className="container-site py-10 md:py-14">
       <div className="mb-10 md:mb-12">

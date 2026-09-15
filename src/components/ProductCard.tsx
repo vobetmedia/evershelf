@@ -1,10 +1,12 @@
 import Link from "next/link";
 import { formatPrice, type Product } from "@/data/products";
+
+type CardProduct = Product & { images?: string[] };
 import { productImage } from "@/data/images";
 import { Photo } from "./Photo";
 import { RatingBadge } from "./ui";
 
-export function ProductCard({ product, index = 0 }: { product: Product; index?: number }) {
+export function ProductCard({ product, index = 0 }: { product: CardProduct; index?: number }) {
   const reviewCount = product.reviews.length * 47 + product.approval;
   return (
     <Link
@@ -13,7 +15,7 @@ export function ProductCard({ product, index = 0 }: { product: Product; index?: 
     >
       <div className="relative aspect-[4/5] overflow-hidden bg-mist">
         <div className="h-full w-full transition-transform duration-300 ease-out group-hover:scale-105">
-          <Photo src={productImage(product.slug, index % 2)} alt={product.name} sizes="(min-width: 1024px) 25vw, 50vw" />
+          <Photo src={product.images?.[index % 2] ?? product.images?.[0] ?? productImage(product.slug, index % 2)} alt={product.name} sizes="(min-width: 1024px) 25vw, 50vw" />
         </div>
         <RatingBadge approval={product.approval} className="absolute right-3 top-3" />
         {product.newArrival && (
@@ -37,7 +39,7 @@ export function ProductCard({ product, index = 0 }: { product: Product; index?: 
   );
 }
 
-export function ProductGrid({ products, cols = 4 }: { products: Product[]; cols?: 3 | 4 }) {
+export function ProductGrid({ products, cols = 4 }: { products: CardProduct[]; cols?: 3 | 4 }) {
   const colCls = cols === 4 ? "lg:grid-cols-4" : "lg:grid-cols-3";
   return (
     <div className={`grid grid-cols-2 gap-x-4 gap-y-8 md:grid-cols-3 ${colCls} md:gap-x-6`}>

@@ -1,27 +1,30 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { formatPrice, getProduct, products } from "@/data/products";
+import { formatPrice } from "@/data/products";
+import { getProduct, getProducts } from "@/lib/shopify";
+import { addToCart, buyNow } from "@/app/actions/cart";
 import { ProductGrid } from "@/components/ProductCard";
-import { PRODUCT_IMAGES } from "@/data/images";
 import { Photo } from "@/components/Photo";
 import { Gallery } from "@/components/Gallery";
 import { Button, RatingBadge, SectionHeader, Stars } from "@/components/ui";
 
-export function generateStaticParams() {
-  return products.map((p) => ({ slug: p.slug }));
+export const revalidate = 60;
+
+export async function generateStaticParams() {
+  return (await getProducts()).map((p) => ({ slug: p.slug }));
 }
 
 export async function generateMetadata({ params }: PageProps<"/products/[slug]">): Promise<Metadata> {
   const { slug } = await params;
-  const product = getProduct(slug);
+  const product = await getProduct(slug);
   if (!product) return {};
   return { title: product.name, description: product.description };
 }
 
 export default async function ProductPage({ params }: PageProps<"/products/[slug]">) {
   const { slug } = await params;
-  const product = getProduct(slug);
+  const [product, products] = await Promise.all([getProduct(slug), getProducts()]);
   if (!product) notFound();
 
   const related = products
@@ -29,7 +32,10 @@ export default async function ProductPage({ params }: PageProps<"/products/[slug
     .sort((a, b) => Number(b.category === product.category) - Number(a.category === product.category))
     .slice(0, 4);
   const reviewCount = product.reviews.length * 47 + product.approval;
-  const avg = (product.reviews.reduce((s, r) => s + r.rating, 0) / product.reviews.length).toFixed(1);
+  const avg = product.reviews.length
+    ? (product.reviews.reduce((s, r) => s + r.rating, 0) / product.reviews.length).toFixed(1)
+    : "5.0";
+  const canBuy = Boolean(product.variantId) && product.available;
 
   const specs = [
     ["Height", product.heightLabel],
@@ -56,7 +62,7 @@ export default async function ProductPage({ params }: PageProps<"/products/[slug
 
       <div className="grid gap-10 lg:grid-cols-[1.15fr_1fr] lg:gap-16">
         <Gallery
-          images={(PRODUCT_IMAGES[product.slug] ?? []).map((src, i) => (
+          images={product.images.map((src, i) => (
             <Photo key={src + i} src={src} alt={`${product.name} — view ${i + 1}`} sizes="(min-width: 1024px) 55vw, 100vw" priority={i === 0} />
           ))}
         />
@@ -78,16 +84,35 @@ export default async function ProductPage({ params }: PageProps<"/products/[slug
             </div>
           </div>
 
-          <p className="mt-6 text-[28px] font-bold">{formatPrice(product.price)}</p>
+          <p className="mt-6 text-[28px] font-bold">
+            {formatPrice(product.price)}
+            {product.available && product.source === "shopify" && (
+              <span className="ml-3 align-middle text-[12px] font-bold uppercase text-accent">In stock</span>
+            )}
+          </p>
           <p className="mt-4 text-[17px] leading-6">{product.description}</p>
 
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-            <Button className="flex-1" disabled title="Checkout is coming soon">
-              Shop now — coming soon
-            </Button>
-            <Button variant="secondary" className="flex-1" disabled>
-              Save for later
-            </Button>
+            {canBuy ? (
+              <>
+                <form action={buyNow} className="flex-1">
+                  <input type="hidden" name="variantId" value={product.variantId!} />
+                  <Button type="submit" className="w-full">
+                    Buy now
+                  </Button>
+                </form>
+                <form action={addToCart} className="flex-1">
+                  <input type="hidden" name="variantId" value={product.variantId!} />
+                  <Button type="submit" variant="secondary" className="w-full">
+                    Add to cart
+                  </Button>
+                </form>
+              </>
+            ) : (
+              <Button className="flex-1" disabled title={product.variantId ? "Sold out" : "Checkout is not connected yet"}>
+                {product.variantId ? "Sold out" : "Shop now — coming soon"}
+              </Button>
+            )}
           </div>
           <p className="mt-3 text-[12px] text-gray-600">
             Free shipping over $150 · Ships in 2–4 business days · 30-day returns
