@@ -42,11 +42,11 @@ export function SectionHead({
 export function HomeHero() {
   return (
     <div className="container-site">
-      <div className="flex flex-col items-center pt-8 md:pt-[60px]">
+      <div className="hidden flex-col items-center pt-8 md:pt-[60px] lg:flex">
         <Wordmark className="w-full max-w-[826px]" />
       </div>
 
-      <form role="search" action="/shop" className="mt-[14px] flex h-[60px] md:h-[74px]">
+      <form role="search" action="/shop" className="mt-6 flex h-[60px] md:h-[74px] lg:mt-[14px]">
         <input
           type="search"
           name="q"
@@ -66,14 +66,14 @@ export function HomeHero() {
         </button>
       </form>
 
-      <div className="mt-6 grid grid-cols-2 gap-3 md:grid-cols-3 lg:grid-cols-6 lg:gap-[23px]">
+      <div className="mt-4 grid grid-cols-3 gap-3 md:mt-6 lg:grid-cols-6 lg:gap-[23px]">
         {TRENDING.map((t, i) => (
-          <Link key={t.label} href={t.href} className="group relative block h-[160px] overflow-hidden md:h-[200px]">
+          <Link key={t.label} href={t.href} className="group relative block h-[150px] overflow-hidden md:h-[200px]">
             <div className="h-full w-full transition-transform duration-300 group-hover:scale-105">
               <Photo src={t.image} alt={t.label} sizes="(min-width: 1024px) 16vw, 50vw" priority={i < 3} />
             </div>
             <span className="absolute inset-0 bg-ink/30 transition-colors group-hover:bg-accent/55" />
-            <span className="display absolute inset-0 flex items-center justify-center px-3 text-center text-[24px] leading-[24px] text-paper md:text-[26px]">
+            <span className="display absolute inset-0 flex items-center justify-center px-2 text-center text-[19px] leading-[19px] text-paper md:text-[26px] md:leading-[24px]">
               {t.label}
             </span>
           </Link>

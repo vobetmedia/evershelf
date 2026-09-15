@@ -30,7 +30,11 @@ export function Wordmark({ className = "" }: { className?: string }) {
 
 export function TrustBanner() {
   return (
-    <div className="flex h-[59px] items-center justify-center bg-ink px-4 text-center text-[12px] text-paper">
+    <div className="flex min-h-[59px] items-center justify-center gap-3 bg-ink px-4 py-2 text-left text-[12px] leading-4 text-paper md:text-center">
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" className="shrink-0 md:hidden" aria-hidden="true">
+        <path d="M12 2.5l2 1.6 2.5-.4 1 2.4 2.4 1-.4 2.5 1.6 2-1.6 2 .4 2.5-2.4 1-1 2.4-2.5-.4-2 1.6-2-1.6-2.5.4-1-2.4-2.4-1 .4-2.5-1.6-2 1.6-2-.4-2.5 2.4-1 1-2.4 2.5.4z" />
+        <path d="M8.5 12l2.5 2.5 4.5-5" />
+      </svg>
       <p>
         The real look on statement trees—real wood, real reviews, and real photos from real homes.{" "}
         <Link href="/about" className="underline underline-offset-2 hover:text-accent-soft">
@@ -72,11 +76,15 @@ export function Header() {
             </svg>
           </button>
           {!isHome && (
-            <Link href="/" aria-label="EverShelf home">
+            <Link href="/" aria-label="EverShelf home" className="hidden lg:block">
               <Wordmark className="max-h-[34px]" />
             </Link>
           )}
         </div>
+
+        <Link href="/" aria-label="EverShelf home" className="absolute left-1/2 -translate-x-1/2 lg:hidden">
+          <Wordmark className="max-h-[36px] w-auto" />
+        </Link>
 
         <nav aria-label="Primary" className="absolute left-1/2 hidden -translate-x-1/2 lg:block">
           <ul className="flex items-center gap-[60px] xl:gap-[100px]">
@@ -90,8 +98,8 @@ export function Header() {
           </ul>
         </nav>
 
-        <div className="flex items-center gap-7">
-          <Link href="/about" aria-label="Account (coming soon)" className="flex h-6 w-6 items-center justify-center">
+        <div className="flex items-center gap-5 md:gap-7">
+          <Link href="/about" aria-label="Account (coming soon)" className="hidden h-6 w-6 items-center justify-center md:flex">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6">
               <circle cx="12" cy="12" r="10.5" />
               <circle cx="12" cy="10" r="3.5" />
