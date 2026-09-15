@@ -30,8 +30,8 @@ export function Wordmark({ className = "" }: { className?: string }) {
 
 export function TrustBanner() {
   return (
-    <div className="flex min-h-[59px] items-center justify-center gap-3 bg-ink px-4 py-2 text-left text-[12px] leading-4 text-paper md:text-center">
-      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" className="shrink-0 md:hidden" aria-hidden="true">
+    <div className="flex min-h-[59px] items-center justify-center gap-3 bg-ink px-5 py-2 text-left text-[12px] leading-[18px] text-paper md:text-center">
+      <svg width="25" height="25" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" className="shrink-0 md:hidden" aria-hidden="true">
         <path d="M12 2.5l2 1.6 2.5-.4 1 2.4 2.4 1-.4 2.5 1.6 2-1.6 2 .4 2.5-2.4 1-1 2.4-2.5-.4-2 1.6-2-1.6-2.5.4-1-2.4-2.4-1 .4-2.5-1.6-2 1.6-2-.4-2.5 2.4-1 1-2.4 2.5.4z" />
         <path d="M8.5 12l2.5 2.5 4.5-5" />
       </svg>
@@ -62,7 +62,7 @@ export function Header() {
     <>
     {isHome && <TrustBanner />}
     <header className="sticky top-0 z-[240] bg-paper">
-      <div className="container-site relative flex h-header items-center justify-between">
+      <div className="container-site relative flex h-[58px] items-center justify-between lg:h-header">
         <div className="flex items-center gap-5">
           <button
             type="button"
@@ -82,8 +82,8 @@ export function Header() {
           )}
         </div>
 
-        <Link href="/" aria-label="EverShelf home" className="absolute left-1/2 -translate-x-1/2 lg:hidden">
-          <Wordmark className="max-h-[36px] w-auto" />
+        <Link href="/" aria-label="EverShelf home" className="absolute left-1/2 w-[54%] max-w-[238px] -translate-x-1/2 lg:hidden">
+          <Wordmark className="w-full" />
         </Link>
 
         <nav aria-label="Primary" className="absolute left-1/2 hidden -translate-x-1/2 lg:block">
@@ -98,7 +98,7 @@ export function Header() {
           </ul>
         </nav>
 
-        <div className="flex items-center gap-5 md:gap-7">
+        <div className="flex items-center gap-[7px] md:gap-7">
           <Link href="/about" aria-label="Account (coming soon)" className="hidden h-6 w-6 items-center justify-center md:flex">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6">
               <circle cx="12" cy="12" r="10.5" />

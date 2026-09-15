@@ -46,13 +46,13 @@ export function HomeHero() {
         <Wordmark className="w-full max-w-[826px]" />
       </div>
 
-      <form role="search" action="/shop" className="mt-6 flex h-[60px] md:h-[74px] lg:mt-[14px]">
+      <form role="search" action="/shop" className="mt-[10px] flex h-[60px] md:h-[74px] lg:mt-[14px]">
         <input
           type="search"
           name="q"
           placeholder="Tree, palm, or room"
           aria-label="Search products"
-          className="min-w-0 flex-1 bg-mist px-[21px] text-[16px] outline-none placeholder:text-gray-600 md:text-[18px]"
+          className="min-w-0 flex-1 bg-mist px-[21px] text-[17px] outline-none placeholder:text-gray-600 md:text-[18px]"
         />
         <button
           type="submit"
@@ -66,14 +66,14 @@ export function HomeHero() {
         </button>
       </form>
 
-      <div className="mt-4 grid grid-cols-3 gap-3 md:mt-6 lg:grid-cols-6 lg:gap-[23px]">
+      <div className="mt-6 grid grid-cols-3 gap-[6px] lg:grid-cols-6 lg:gap-[23px]">
         {TRENDING.map((t, i) => (
-          <Link key={t.label} href={t.href} className="group relative block h-[150px] overflow-hidden md:h-[200px]">
+          <Link key={t.label} href={t.href} className="group relative block aspect-[142/103] overflow-hidden lg:aspect-auto lg:h-[200px]">
             <div className="h-full w-full transition-transform duration-300 group-hover:scale-105">
               <Photo src={t.image} alt={t.label} sizes="(min-width: 1024px) 16vw, 50vw" priority={i < 3} />
             </div>
             <span className="absolute inset-0 bg-ink/30 transition-colors group-hover:bg-accent/55" />
-            <span className="display absolute inset-0 flex items-center justify-center px-2 text-center text-[19px] leading-[19px] text-paper md:text-[26px] md:leading-[24px]">
+            <span className="display absolute inset-0 flex items-center justify-center px-2 text-center text-[16px] leading-[14px] text-paper md:text-[26px] md:leading-[24px]">
               {t.label}
             </span>
           </Link>
@@ -84,39 +84,74 @@ export function HomeHero() {
 }
 
 export function FeaturedHomes() {
+  const homes = FEATURED_HOMES.slice(0, 2);
   return (
-    <section className={`container-site ${SECTION}`}>
-      <SectionHead title="Featured homes" small link={{ href: "/shop", label: "Shop by room" }} />
-      <div className="grid grid-cols-1 gap-3 md:grid-cols-2 md:gap-5">
-        {FEATURED_HOMES.slice(0, 2).map((h) => (
-          <Link key={h.handle} href={`/products/${h.slug}`} className="group block">
-            <div className="aspect-[4/5] overflow-hidden">
-              <div className="h-full w-full transition-transform duration-500 group-hover:scale-105">
-                <Photo src={ROOM_IMAGE[h.room]} alt={`${h.name}’s ${h.room.toLowerCase()}`} sizes="(min-width: 768px) 50vw, 100vw" />
-              </div>
-            </div>
-            <p className="mt-3 text-[14px] font-bold">{h.name} · {h.city}</p>
-            <p className="text-[13px] text-gray-600">{h.tree}</p>
+    <>
+      <section className="mt-[25px] bg-cream px-4 py-5 lg:hidden">
+        <header className="relative flex flex-col items-center text-center">
+          <span className="absolute right-0 top-0 text-[10px] uppercase text-gray-600">Featured</span>
+          <h2 className="display pt-4 text-[28px] leading-[26px]">Featured homes</h2>
+          <Link href="/shop" className="mt-1 text-[10px] font-bold uppercase underline underline-offset-2">
+            Shop by room
           </Link>
-        ))}
-      </div>
-    </section>
+        </header>
+        <div className="mt-6 flex flex-col gap-2">
+          {homes.map((h) => (
+            <article key={h.handle} className="flex h-[109px] items-center gap-3 bg-paper px-[10px]">
+              <Link href={`/shop?room=${h.room}`} className="h-[70px] w-[70px] shrink-0 overflow-hidden rounded-full">
+                <Photo src={ROOM_IMAGE[h.room]} alt={h.room} sizes="70px" />
+              </Link>
+              <div className="min-w-0 flex-1">
+                <p className="truncate text-[12px] font-bold">{h.name}</p>
+                <p className="truncate text-[10px]">{h.room} · {h.city}</p>
+                <p className="mt-1 truncate text-[10px] font-bold text-accent-mid">{h.tree}</p>
+              </div>
+              <div className="flex shrink-0 flex-col gap-2">
+                <Link href={`/shop?room=${h.room}`} className="flex h-[26px] w-[87px] items-center justify-center border border-ink text-[10px] font-bold uppercase">
+                  Shop look
+                </Link>
+                <Link href={`/products/${h.slug}`} className="flex h-[26px] w-[87px] items-center justify-center bg-accent text-[10px] font-bold uppercase text-paper">
+                  View tree
+                </Link>
+              </div>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section className={`container-site hidden ${SECTION} lg:block`}>
+        <SectionHead title="Featured homes" small link={{ href: "/shop", label: "Shop by room" }} />
+        <div className="grid grid-cols-2 gap-5">
+          {homes.map((h) => (
+            <Link key={h.handle} href={`/products/${h.slug}`} className="group block">
+              <div className="aspect-[4/5] overflow-hidden">
+                <div className="h-full w-full transition-transform duration-500 group-hover:scale-105">
+                  <Photo src={ROOM_IMAGE[h.room]} alt={`${h.name}’s ${h.room.toLowerCase()}`} sizes="50vw" />
+                </div>
+              </div>
+              <p className="mt-3 text-[14px] font-bold">{h.name} · {h.city}</p>
+              <p className="text-[13px] text-gray-600">{h.tree}</p>
+            </Link>
+          ))}
+        </div>
+      </section>
+    </>
   );
 }
 
 function WorthItTile({ product, seed, className = "" }: { product: Product; seed: number; className?: string }) {
   const ratings = product.reviews.length * 47 + product.approval;
   return (
-    <Link href={`/products/${product.slug}`} className={`group relative block h-[380px] overflow-hidden md:h-[480px] ${className}`}>
+    <Link href={`/products/${product.slug}`} className={`group relative block overflow-hidden ${className}`}>
       <div className="h-full w-full transition-transform duration-500 group-hover:scale-105">
         <Photo src={productImage(product.slug, seed % 2)} alt={product.name} sizes="(min-width: 768px) 50vw, 100vw" />
       </div>
       <span className="absolute inset-0 bg-gradient-to-t from-ink/70 via-ink/10 to-transparent" />
-      <RatingBadge approval={product.approval} size="lg" className="absolute right-5 top-5 md:right-6 md:top-6" />
-      <span className="absolute inset-x-0 bottom-0 p-5 text-paper md:p-6">
-        <span className="display block text-[30px] md:text-[36px]">{product.name}</span>
-        <span className="mt-2 block text-[15px] font-light md:text-[17px]">Based on {ratings.toLocaleString()} ratings</span>
-        <span className="block text-[15px] font-light md:text-[17px]">Price is {formatPrice(product.price)}</span>
+      <RatingBadge approval={product.approval} size="lg" className="absolute right-3 top-3 origin-top-right scale-[0.62] md:right-6 md:top-6 md:scale-100" />
+      <span className="absolute inset-x-0 bottom-0 p-3 text-paper md:p-6">
+        <span className="display block text-[20px] leading-[20px] md:text-[36px] md:leading-none">{product.name}</span>
+        <span className="mt-1 block text-[12px] font-light leading-4 md:mt-2 md:text-[17px] md:leading-6">Based on {ratings.toLocaleString()} ratings</span>
+        <span className="block text-[12px] font-light leading-4 md:text-[17px] md:leading-6">Price is {formatPrice(product.price)}</span>
       </span>
     </Link>
   );
@@ -127,11 +162,11 @@ export function WorthIt({ items }: { items: Product[] }) {
   return (
     <section className={`container-site ${SECTION}`}>
       <SectionHead title="Is it worth it?" subtitle="The real deal on what looks real—according to EverShelf reviews" />
-      <div className="grid grid-cols-1 gap-3 md:grid-cols-6 md:gap-5">
-        <WorthItTile product={a} seed={1} className="md:col-span-3" />
-        <WorthItTile product={b} seed={2} className="md:col-span-3" />
+      <div className="grid grid-cols-6 gap-[10px] md:gap-5">
+        <WorthItTile product={a} seed={1} className="col-span-3 h-[301px] md:h-[480px]" />
+        <WorthItTile product={b} seed={2} className="col-span-3 h-[301px] md:h-[480px]" />
         {rest.slice(0, 3).map((p, i) => (
-          <WorthItTile key={p.slug} product={p} seed={i + 3} className="md:col-span-2" />
+          <WorthItTile key={p.slug} product={p} seed={i + 3} className="col-span-2 h-[292px] md:h-[480px]" />
         ))}
       </div>
     </section>
