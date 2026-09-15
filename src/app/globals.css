@@ -1,0 +1,80 @@
+@import "tailwindcss";
+
+@theme {
+  --color-*: initial;
+  --color-transparent: transparent;
+  --color-current: currentColor;
+
+  --color-accent: #2d6a4f;
+  --color-accent-dark: #1b4332;
+  --color-accent-mid: #40916c;
+  --color-accent-soft: #74c69d;
+  --color-accent-tint: #e8f1ec;
+  --color-sage: #d8e8dd;
+
+  --color-ink: #000000;
+  --color-paper: #ffffff;
+  --color-mist: #e2e6e7;
+  --color-cream: #fef9eb;
+  --color-gray-300: #cccccc;
+  --color-gray-400: #bdbdbd;
+  --color-gray-600: #717171;
+
+  --font-display: var(--font-archivo), Impact, "Arial Narrow", sans-serif;
+  --font-sans: var(--font-inter), "Helvetica Neue", Helvetica, Arial, sans-serif;
+
+  --container-site: 1344px;
+  --spacing-header: 62px;
+
+  --shadow-card: 0 10px 30px -10px rgb(0 0 0 / 0.25);
+}
+
+html {
+  color-scheme: light;
+}
+
+body {
+  background: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  font-size: 17px;
+  line-height: 24px;
+}
+
+/* RealSelf uses ABC Gravity Condensed (licensed). To swap it in, load it via next/font/local
+   in layout.tsx as --font-archivo and set --display-stretch to 100%. */
+:root {
+  --display-stretch: 75%;
+}
+
+@utility display {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-stretch: var(--display-stretch);
+  text-transform: uppercase;
+  line-height: 0.95;
+  letter-spacing: -0.005em;
+}
+
+@utility container-site {
+  width: 100%;
+  max-width: var(--container-site);
+  margin-inline: auto;
+  padding-inline: 16px;
+  @media (width >= 768px) {
+    padding-inline: 24px;
+  }
+  @media (width >= 1024px) {
+    padding-inline: 48px;
+  }
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+::selection {
+  background: var(--color-accent);
+  color: var(--color-paper);
+}
